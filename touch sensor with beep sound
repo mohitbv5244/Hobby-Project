@@ -1,0 +1,143 @@
+
+#include <Wire.h>
+//#include "pitches.h"
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+#define NOTE_C4  262
+// notes in the melody:
+int melody[] = {
+  NOTE_C4
+};
+
+// note durations: 4 = quarter note, 8 = eighth note, etc.:
+int noteDurations[] = {
+  4, 8, 8, 4, 4, 4, 4, 4
+};
+
+
+const int touchbutton = 2;
+const  int ledpin2 = 4;
+const int buttonin = 3;
+const int colorR = 205;
+const int colorG = 205;
+const int colorB = 75;
+ //int lastbuttonstate = 0;
+ //int counter = 0;
+  int touchbuttonstate = 0;
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin 2 as an output.
+  pinMode(9, OUTPUT);
+   pinMode(7, OUTPUT);
+   pinMode(10, OUTPUT);
+    pinMode(5, OUTPUT);
+   pinMode(6, OUTPUT);
+   pinMode(8, OUTPUT);
+  pinMode(ledpin2, OUTPUT);
+  pinMode(touchbutton, INPUT);
+  pinMode(buttonin, INPUT);
+   //Serial.begin(9600);
+   lcd.begin(16, 2);
+    
+    lcd.setRGB(colorR, colorG, colorB);
+    
+    // Print a message to the LCD.
+    //lcd.print("Not Engaged");
+    // iterate over the notes of the melody:
+ 
+}
+// the loop function runs over and over again forever
+void loop() {
+  lcd.setRGB(colorR, colorG, colorB);
+//int x = 0;
+//boolean pressed = true;
+lcd.setCursor(1, 0);
+ // buttonstate = digitalRead(buttonin);
+  touchbuttonstate = digitalRead(touchbutton);
+    if(touchbuttonstate == HIGH)
+    {
+      //counter++;
+      //delay(0022);
+      lcd.print("Pressed");
+      //digitalWrite(ledpin2, HIGH);
+      digitalWrite(10, HIGH); 
+       delay(0300);
+      digitalWrite(7, HIGH);
+      delay(0100);
+      digitalWrite(9, HIGH);
+      delay(0300);
+      //lcd.print(counter); 
+      //delay(1000);
+      digitalWrite(5, LOW); 
+      //delay(0300);
+      digitalWrite(6, LOW);
+     // delay(0100);
+      digitalWrite(8, LOW);
+     // delay(0300);
+     lcd.clear();
+      for (int thisNote = 0; thisNote < 8; thisNote++) {
+
+    // to calculate the note duration, take one second
+    // divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(8, melody[thisNote], noteDuration);
+
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(8);
+}
+    }
+    else
+    {
+      const int colorR = 205;
+const int colorG = 205;
+const int colorB = 205;
+      lcd.print("Not Pressed");
+      digitalWrite(5, HIGH); 
+      delay(0300);
+      digitalWrite(6, HIGH);
+      delay(0100);
+      digitalWrite(8, HIGH);
+      delay(0300);
+     //digitalWrite(ledpin2, HIGH);
+     
+      digitalWrite(5, LOW); 
+      delay(0300);
+      digitalWrite(6, LOW);
+      delay(0100);
+      digitalWrite(8, LOW);
+     
+     
+     
+     //delay(2000);
+      digitalWrite(10, HIGH);
+       delay(0300);
+      digitalWrite(7, HIGH);
+      delay(0100);
+      digitalWrite(9, HIGH);
+      delay(0300);
+
+       digitalWrite(10, LOW);
+       delay(0300);
+      digitalWrite(7, LOW);
+      delay(0100);
+      digitalWrite(9, LOW);
+      delay(0300);
+      lcd.clear();
+    }
+    delay(0050);
+  } 
+
+ 
+
+
+ 
+
+
+    
+     
+  
