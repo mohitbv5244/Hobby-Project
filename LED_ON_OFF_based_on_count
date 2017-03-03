@@ -1,0 +1,92 @@
+#include <Wire.h>
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+const int ledpin1 = 2;
+const  int ledpin2 = 4;
+const int buttonin = 3;
+const int colorR = 255;
+const int colorG = 05;
+const int colorB = 15;
+ int lastbuttonstate = 0;
+ int counter = 0;
+  int buttonstate = 0;
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin 2 as an output.
+  pinMode(ledpin1, OUTPUT);
+  pinMode(ledpin2, OUTPUT);
+  pinMode(buttonin, INPUT);
+   //Serial.begin(9600);
+   lcd.begin(16, 2);
+    
+    lcd.setRGB(colorR, colorG, colorB);
+    
+    // Print a message to the LCD.
+    //lcd.print("Not Engaged");
+}
+
+// the loop function runs over and over again forever
+void loop() {
+//int x = 0;
+boolean pressed = true;
+lcd.setCursor(1, 0);
+  buttonstate = digitalRead(buttonin);
+  if(buttonstate != lastbuttonstate)
+  {
+    if(buttonstate == HIGH)
+    {
+      counter++;
+      delay(0022);
+      lcd.print("Pressed");
+      //lcd.print(counter); 
+    //  delay(1000);
+     lcd.clear();
+    }
+    else
+    {
+      lcd.print("Not Pressed");
+     // delay(0100);
+      lcd.clear();
+    }
+    delay(0050);
+  }
+
+  lastbuttonstate = buttonstate;
+
+if(counter % 2 == 0)
+{
+  lcd.print("ONN");
+  lcd.clear();
+  digitalWrite(ledpin1, HIGH); 
+    digitalWrite(ledpin2, HIGH);
+    delay(0300); 
+
+digitalWrite(ledpin1, LOW); 
+    digitalWrite(ledpin2, LOW); 
+}
+else if(counter % 3 == 0)
+{
+lcd.print("ON 1");
+delay(1000);
+lcd.clear();
+  digitalWrite(ledpin1, HIGH); 
+    digitalWrite(ledpin2, HIGH);
+    delay(1000); 
+
+digitalWrite(ledpin1, LOW); 
+    digitalWrite(ledpin2, LOW); 
+}
+
+
+else 
+{lcd.setCursor(0, 1);
+ lcd.print("OFF");
+ // digitalWrite(ledpin1, HIGH); 
+   // digitalWrite(ledpin2, HIGH);
+   // delay(3000); 
+
+//digitalWrite(ledpin1, LOW); 
+   //digitalWrite(ledpin2, LOW); 
+    delay(0100);
+    lcd.clear();
+} 
